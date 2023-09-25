@@ -19,17 +19,20 @@ export const CreateTask = async (req, res, next) => {
   }
 
   console.log("name");
-  res.status(200).send(`User deleted with ID:`);
+  res.status(200).send(`Task has been created successfully`);
 };
 
 export const UpdateTask = async (req, res, next) => {
   const name = req.body.name;
   const taskStatus = req.body.status;
   const reqId = req.params.id;
-  if (req.body.name == "" || req.body.name == undefined) {
+  if (req.body.name === "" || req.body.name ===undefined) {
     res.status(400);
   }
   try {
+    if(taskStatus>2 || taskStatus===undefined){
+      res.status(400)
+    }
     await UpdateSingleTask(reqId, taskStatus, name);
   } catch (e) {
     console.log(e);
@@ -56,6 +59,9 @@ export const GetAllTasks = async (req, res, next) => {
   }
   if (req.query.offset !== undefined || req.query.offset !== "") {
     offset = req.query.offset;
+  }
+  if (req.query.limit!==undefined){
+    limit=req.query.lmit
   }
   try {
     let allTasks = await GetAllTasksFromDb(limit, offset, orderBy, sort);

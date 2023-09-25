@@ -77,19 +77,19 @@ export const GetAllMetricsFromDb = async function () {
       group: "status",
     });
   } catch (e) {
-    console.log(e);
+    throw e;
   }
 };
 
 export const GetTimelineMetricsFromDb = async function () {
   try {
-    return  await sequelize.query(
+    return await sequelize.query(
       `SELECT count(*) as statuscount,status,DATE_TRUNC ('day', created_at)::date as created_day from tasks Group by DATE_TRUNC('day', created_at),status order by created_day`,
       {
         type: QueryTypes.SELECT,
       },
     );
   } catch (e) {
-    console.log(e);
+    throw e;
   }
 };
