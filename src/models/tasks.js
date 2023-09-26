@@ -4,6 +4,10 @@ import { sequelize } from "../../databse/db.js";
    This file defines the models for all the tasks we need this will
    be the place which calls the db and has the schema related to a task
    TODO: The table is not optimized will need to add indexes to make it so seems overkill for now
+   NOTE: Status will have 3 int enum values
+     0:open
+     1:in-progress
+     2:closed
  */
 const Task = sequelize.define(
   "task",

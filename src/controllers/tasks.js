@@ -40,8 +40,11 @@ export const UpdateTask = async (req, res, next) => {
     res.status(400);
   }
   try {
+    //Check the status if its even valid since there are only 3 status types
     if (taskStatus > 2 || taskStatus === undefined) {
-      res.status(400);
+      res.status(400).json({
+        msg:"Please use 0 for open, 1 for in-progress and 2 for closed tasks"
+      });
     }
     await UpdateSingleTask(reqId, taskStatus, name);
     res.status(200).json({
