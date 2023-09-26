@@ -95,7 +95,7 @@ The entire project has been dockerized. So here are the steps
 
 1. Download docker if you do not have it
 2. The docker compose file can be found in the root
-3. Run ```docker-compose up --build``` this will pull all the necessary images
+3. Run ```docker-compose up --build``` this will pull all the necessary images and will start everything as well as create necessary tables. This should be run in root.
 4. The server will be then running on port 8080
 5. I have also added pgadmin for this project. It will make verifying data easier visually, this will be running on ```http://localhost:16543/browser/#``` the credentials can be found in the docker file.
 6. Now you can query the api using the postman collection which has been shared. I cannot share it here but will send it by mail.

@@ -81,7 +81,6 @@ export const GetAllTasks = async (req, res, next) => {
   }
   try {
     let allTasks = await GetAllTasksFromDb(limit, offset, orderBy, sort);
-    console.log(allTasks);
     res.status(200).json({
       data: allTasks,
     });
@@ -125,7 +124,6 @@ export const GetMetricsWithTimeline = async (req, res, next) => {
   try {
     let data = {};
     let results = await GetTimelineMetricsFromDb();
-    console.log(results);
     results.forEach((result) => {
       if (!(result.created_day in data)) {
         data[result.created_day] = {
@@ -142,7 +140,6 @@ export const GetMetricsWithTimeline = async (req, res, next) => {
         data[result.created_day].completed_tasks = result.statuscount;
       }
     });
-    console.log(data);
     res.status(200).json({
       data,
     });
