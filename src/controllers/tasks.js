@@ -6,21 +6,35 @@ import {
   UpdateSingleTask,
 } from "../models/tasks.js";
 
+/*
+This is where the controllers reside this will be called from the routes and will
+handle all business logic and most data transformation, It will be mainly be responsible
+for calling the models which will access the data layer
+*/
+
+
+/*CreateTask: Will create your basic task
+
+ */
 export const CreateTask = async (req, res, next) => {
-  console.log(req.body);
   const name = req.body.name;
-  if (req.body.name == "" || req.body.name == undefined) {
+  if (req.body.name === "" || req.body.name === undefined) {
     res.status(400);
   }
   try {
-    await CreateSingleTask(name);
+    let taskId=await CreateSingleTask(name);
+    res.status(200).json({
+      "id":taskId,
+      "message":"Task created successfully"
+    })
+
   } catch (e) {
     console.log(e);
+    res.status(500)
   }
-
-  console.log("name");
-  res.status(200).send(`Task has been created successfully`);
+  return
 };
+
 
 export const UpdateTask = async (req, res, next) => {
   const name = req.body.name;
