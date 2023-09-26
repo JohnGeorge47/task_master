@@ -49,8 +49,46 @@ and their contracts are also defined below
      a. order_by: Allowed values are "id","created_at","updated_at"
 
      b. sort: ASC or DESC
+
+
+
 4. Get metrics
+   ```
+   [GET] {url}/api/tasks/metrics
+   ```
+   Response
+   
+   ```   
+    "data": {
+        "open_tasks": "4",
+        "inprogress_tasks": "1",
+        "completed_tasks": 0
+    ```
 5. Get metrics timeline
+   ```
+   [GET] {url}/api/tasks/metrics_timeline
+   ```
+   Response
+   ```
+   {
+    "data": {
+        "2023-09-20": {
+            "open_tasks": "1",
+            "inprogress_tasks": 0,
+            "completed_tasks": 0
+        },
+        "2023-09-22": {
+            "open_tasks": "1",
+            "inprogress_tasks": "1",
+            "completed_tasks": 0
+        },
+        "2023-09-25": {
+            "open_tasks": "2",
+            "inprogress_tasks": 0,
+            "completed_tasks": "1"
+        }
+    }
+   ```
 
 #### How to get this working
 The entire project has been dockerized. So here are the steps

@@ -1,6 +1,10 @@
 import { Sequelize, DataTypes, QueryTypes } from "sequelize";
 import { sequelize } from "../../databse/db.js";
-
+/*
+   This file defines the models for all the tasks we need this will
+   be the place which calls the db and has the schema related to a task
+   TODO: The table is not optimized will need to add indexes to make it so seems overkill for now
+ */
 const Task = sequelize.define(
   "task",
   {

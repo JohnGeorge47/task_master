@@ -12,48 +12,45 @@ handle all business logic and most data transformation, It will be mainly be res
 for calling the models which will access the data layer
 */
 
-
-/*CreateTask: Will create your basic task
-
- */
+//CreateTask: Will create your basic task
 export const CreateTask = async (req, res, next) => {
+  // We get name from the request body
   const name = req.body.name;
   if (req.body.name === "" || req.body.name === undefined) {
     res.status(400);
   }
   try {
-    let taskId=await CreateSingleTask(name);
+    let taskId = await CreateSingleTask(name);
     res.status(200).json({
-      "id":taskId,
-      "message":"Task created successfully"
-    })
-
+      id: taskId,
+      message: "Task created successfully",
+    });
   } catch (e) {
     console.log(e);
-    res.status(500)
+    res.status(500);
   }
-  return
+  return;
 };
-
 
 export const UpdateTask = async (req, res, next) => {
   const name = req.body.name;
   const taskStatus = req.body.status;
   const reqId = req.params.id;
-  if (req.body.name === "" || req.body.name ===undefined) {
+  if (req.body.name === "" || req.body.name === undefined) {
     res.status(400);
   }
   try {
-    if(taskStatus>2 || taskStatus===undefined){
-      res.status(400)
+    if (taskStatus > 2 || taskStatus === undefined) {
+      res.status(400);
     }
     await UpdateSingleTask(reqId, taskStatus, name);
+    res.status(200).json({
+      "message":"Task has been updated successfully"
+    })
   } catch (e) {
-    console.log(e);
+    res.status(500)
   }
-
-  console.log("name");
-  res.status(200).send(`User deleted with ID:`);
+   return
 };
 
 export const GetAllTasks = async (req, res, next) => {
@@ -74,8 +71,13 @@ export const GetAllTasks = async (req, res, next) => {
   if (req.query.offset !== undefined || req.query.offset !== "") {
     offset = req.query.offset;
   }
-  if (req.query.limit!==undefined){
-    limit=req.query.lmit
+  if (req.query.limit !== undefined) {
+    limit = req.query.lmit;
+  }
+  if (limit > 1000) {
+    res.status(500).json({
+      error: "limit has to be below 1000",
+    });
   }
   try {
     let allTasks = await GetAllTasksFromDb(limit, offset, orderBy, sort);
@@ -88,6 +90,10 @@ export const GetAllTasks = async (req, res, next) => {
     res.status(500);
   }
 };
+
+/*
+  TODO:Both of the following API's will need a data range otherwise it will not be very usable and will become slow on large data sets
+ */
 
 export const GetTotalMetrics = async (req, res, next) => {
   try {
